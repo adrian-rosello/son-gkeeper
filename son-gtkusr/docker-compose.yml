@@ -5,21 +5,23 @@ services:
     build:
       context: ./
       dockerfile: dockerfile-gtkusr
+    networks:
+      - default
     ports: 
       - "4021:4021"
-    #links:
-    #  - keycloak
     environment:
       - KEYCLOAK_ADDRESS=keycloak
       - KEYCLOAK_PORT=8080
       - KEYCLOAK_PATH=auth
       - SONATA_REALM=sonata
       - CLIENT_NAME=adapter
-    container_name: sonata-gk-usr
+    container_name: sonata-adapter
   keycloak:
     build:
       context: ./
       dockerfile: dockerfile-keycloak
+    networks:
+      - default
     ports:
       - "8080:8080"
     environment:
@@ -27,4 +29,4 @@ services:
       - KEYCLOAK_PASSWORD=admin
     links:
       - adapter
-    container_name: sonata-keycloak    
+    container_name: sonata-keycloak 
